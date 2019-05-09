@@ -20,4 +20,20 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// EncodeFooRequest is responsible of encoding a domain-layer FooRequest into a protobuf message
+func EncodeFooRequest(request interface{}) (interface{}, error) {
+	if request == nil {
+		return nil, errors.New("nil FooRequest")
+	}
+	req := pbRequest.(*FooRequest)
+}
+
+// EncodeBarRequest is responsible of encoding a domain-layer BarRequest into a protobuf message
+func EncodeBarRequest(request interface{}) (interface{}, error) {
+	if request == nil {
+		return nil, errors.New("nil BarRequest")
+	}
+	req := pbRequest.(*BarRequest)
+}
+
 // Godin: Why not Zoidberg?
