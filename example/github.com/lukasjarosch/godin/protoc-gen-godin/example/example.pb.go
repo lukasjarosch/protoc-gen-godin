@@ -4,10 +4,8 @@
 package example
 
 import (
-	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	grpc "google.golang.org/grpc"
 	math "math"
 )
 
@@ -210,109 +208,4 @@ var fileDescriptor_15a1dc8d40dadaa6 = []byte{
 	0xc5, 0x59, 0x89, 0x45, 0xf9, 0xc5, 0xc9, 0x19, 0xfa, 0x60, 0x4d, 0xfa, 0xe0, 0x70, 0x49, 0xd6,
 	0x4d, 0x4f, 0xcd, 0xd3, 0x85, 0x08, 0x40, 0x4d, 0xb1, 0x86, 0xd2, 0x49, 0x6c, 0x60, 0x15, 0xc6,
 	0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2f, 0x8a, 0x2f, 0x04, 0x4a, 0x01, 0x00, 0x00,
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ grpc.ClientConn
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
-
-// ExampleServiceClient is the client API for ExampleService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ExampleServiceClient interface {
-	Foo(ctx context.Context, in *FooRequest, opts ...grpc.CallOption) (*FooResponse, error)
-	Bar(ctx context.Context, in *BarRequest, opts ...grpc.CallOption) (*BarResponse, error)
-}
-
-type exampleServiceClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewExampleServiceClient(cc *grpc.ClientConn) ExampleServiceClient {
-	return &exampleServiceClient{cc}
-}
-
-func (c *exampleServiceClient) Foo(ctx context.Context, in *FooRequest, opts ...grpc.CallOption) (*FooResponse, error) {
-	out := new(FooResponse)
-	err := c.cc.Invoke(ctx, "/godin.example.ExampleService/Foo", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *exampleServiceClient) Bar(ctx context.Context, in *BarRequest, opts ...grpc.CallOption) (*BarResponse, error) {
-	out := new(BarResponse)
-	err := c.cc.Invoke(ctx, "/godin.example.ExampleService/Bar", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ExampleServiceServer is the server API for ExampleService service.
-type ExampleServiceServer interface {
-	Foo(context.Context, *FooRequest) (*FooResponse, error)
-	Bar(context.Context, *BarRequest) (*BarResponse, error)
-}
-
-func RegisterExampleServiceServer(s *grpc.Server, srv ExampleServiceServer) {
-	s.RegisterService(&_ExampleService_serviceDesc, srv)
-}
-
-func _ExampleService_Foo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FooRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExampleServiceServer).Foo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/godin.example.ExampleService/Foo",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Foo(ctx, req.(*FooRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExampleService_Bar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BarRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExampleServiceServer).Bar(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/godin.example.ExampleService/Bar",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Bar(ctx, req.(*BarRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _ExampleService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "godin.example.ExampleService",
-	HandlerType: (*ExampleServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Foo",
-			Handler:    _ExampleService_Foo_Handler,
-		},
-		{
-			MethodName: "Bar",
-			Handler:    _ExampleService_Bar_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "example.proto",
 }

@@ -35,5 +35,3 @@ func EncodeBarRequest(request interface{}) (interface{}, error) {
 	}
 	req := pbRequest.(*BarRequest)
 }
-
-// Godin: Why not Zoidberg?
