@@ -1,4 +1,4 @@
-# protoc-gen-micro
+# protoc-gen-godin
 > Generate code to reduce gRPC layer boilerplate 
 
 
